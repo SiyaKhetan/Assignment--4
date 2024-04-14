@@ -1,0 +1,31 @@
+class Solution {
+public:
+    std::vector<int> searchRange(std::vector<int>& nums, int target) {
+        int n = nums.size();
+        int low = 0, high = n - 1;
+        int start = -1, end = -1;
+
+        while (high >= low) {
+            int mid = low + (high - low) / 2;
+            if (nums[mid] == target) {
+                start = mid;
+                end = mid;
+                // Expand the range to the left
+                while (start > 0 && nums[start - 1] == target) {
+                    start--;
+                }
+                // Expand the range to the right
+                while (end < n - 1 && nums[end + 1] == target) {
+                    end++;
+                }
+                break;
+            } else if (nums[mid] < target) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        return {start, end};
+    }
+};
